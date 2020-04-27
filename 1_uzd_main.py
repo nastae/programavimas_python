@@ -16,7 +16,9 @@ print(np.arange(1, 2 * n, 2))
 print("4. Sukurkite masyvą dydžio 10 x 10 iš nulių ir \"įrėminkite\" jį vienetais:")
 n = 10
 matrix = np.zeros((n ,n))
-matrix.fill(1)
+matrix[0] = 1
+matrix[::, 0:n:n-1] = 1
+matrix[n-1] = 1
 print(matrix)
 
 print("5. Sukurkite masyvą dydžio 8 x 8, kur 1 ir 0 išdėlioti šachmatine tvarka (panaudokite slicing+striding metodą):")
@@ -28,11 +30,10 @@ print(matrix)
 
 print("6. Sukurkite masyvą dydžio n×n , kurio (i,j)-oji pozicija lygi i+j:")
 n = 10
-matrix = np.zeros((n ,n))
-for j in range(n):
-    for i in range(n):
-        matrix.itemset((i,j), i*j)
+matrix = np.fromfunction(lambda i, j: i + j, (10, 10), dtype=int)
 print(matrix)
+
+
 
 print("7. kurkite atsitiktinį masyvą dydžio 3×5 naudodami np.random.rand(3, 5) funkciją ir suskaičiuokite: sumą, eilučių sumą, stulpelių sumą:")
 matrix = np.random.rand(3, 5)
@@ -55,7 +56,7 @@ matrix = np.random.rand(5, 5)
 print("Sukurta matrica: ")
 print(matrix)
 print("Atvirkštinė matrica: ")
-print(np.transpose(matrix))
+print(np.linalg.inv(matrix))
 
 print("10. Apskaičiuokite matricos tikrines reikšmes ir tikrinį vektorių:")
 # Teorija: https://mathworld.wolfram.com/Eigenvalue.html
