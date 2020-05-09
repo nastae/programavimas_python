@@ -1,0 +1,82 @@
+{% extends "main/base.html" %}
+{% block content %}
+    <style>
+        table, th, td {
+            border: 1px solid black;
+        }
+    </style>
+    <h2>Form details:</h2>
+    <table style="width: 400px;">
+        <tr>
+            <th style="max-width: 50px">Company</th>
+            <td>{{ object.order_approval_number }}</td>
+        </tr>
+        <tr>
+            <th>Order Approval Number</th>
+            <td>{{ object.order_approval_number }}</td>
+        </tr>
+        <tr>
+            <th>Established At</th>
+            <td>{{ object.established_at }}</td>
+        </tr>
+        <tr>
+            <th>Approved At</th>
+            <td>{{ object.approved_at }}</td>
+        </tr>
+        <tr>
+            <th>Commisioner no. 1</th>
+            <td>{{ object.commisioner_1 }}</td>
+        </tr>
+        <tr>
+            <th>Commisioner no. 2</th>
+            <td>{{ object.commisioner_2 }}</td>
+        </tr>
+        <tr>
+            <th>Commisioner no. 3</th>
+            <td>{{ object.commisioner_3 }}</td>
+        </tr>
+        <tr>
+            <th>Commisioner no. 4</th>
+            <td>{{ object.commisioner_4 }}</td>
+        </tr>
+        <tr>
+            <th>Location</th>
+            <td>{{ object.responsible_user.location }}</td>
+        </tr>
+        <tr>
+            <th>Purchase Doc. Seller</th>
+            <td>{{ object.purchase_doc_seller }}</td>
+        </tr>
+        <tr>
+            <th>Purchase Doc. Number</th>
+            <td>{{ object.purchase_doc_number }}</td>
+        </tr>
+        <tr>
+            <th>Purchase Doc. Serial</th>
+            <td>{{ object.purchase_doc_serial }}</td>
+        </tr>
+        <tr>
+            <th>Purchase Doc. At</th>
+            <td>{{ object.purchase_doc_at }}</td>
+        </tr>
+        <tr>
+            <th>Responsible Worker</th>
+            <td>{{ object.responsible_user.name }} {{ object.responsible_user.surname }}</td>
+        </tr>
+    </table>
+    <br/>
+    <h2>VAT invoices:</h2>
+    {% if invoices %}
+        <ul class="list-group">
+            {% for invoice in invoices %}
+                <li class="list-group-item">
+                    {{ forloop.counter }}. Name: {{ invoice.name }} | Measurement: {{ invoice.measurement }} | Amount: {{ invoice.amount }} | Sum: {{ invoice.sum }} | Location: {{ invoice.location }} | <a href="{% url 'invoice-update' invoice.id %}">Update
+                </li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>Not found any VAT invoice</p>
+    {% endif %}
+    <a class="btn btn-primary btn-xs" href="{% url 'form-in-pdf' object.pk %}">View in PDF</a>
+    <a class="btn btn-primary btn-xs" href="{% url 'invoice-create' object.pk %}">Add VAT Invoice</a>
+{% endblock content %}

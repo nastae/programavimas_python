@@ -1,0 +1,139 @@
+{% load static %}
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+    <head>
+        <title>VAT Invoice</title>
+        <style type="text/css">
+            body {
+                font-weight: 200;
+                font-size: 14px;
+                font-family: serif;
+            }
+            .title-header {
+              font-size: 15px;
+              font-weight: bold;
+              text-align: center;
+              color: #000;
+            }
+            .title {
+                line-height: 15px;
+            }
+            .title span {
+                color: #000;
+            }
+            .main {
+                text-align: left !important;
+                text-indent: 70px;
+            }
+            .header {
+                float: right;
+                text-align: left;
+                margin-left: 450px;
+                padding-top: 25px;
+                line-height: 15px;
+            }
+            table, th, td {
+                border: 0.1px solid black;
+                border-collapse: collapse;
+            }
+            .white-table {
+                border: 0px solid white;
+                border-collapse: collapse;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="header">
+            Patvirtinta {{ company }} direktoriaus <br>
+            {{ approved_at }} isakymu Nr. {{ order_approval_number }} <br><br/>
+            <b>Tvirtinu:</b><br>
+            {{ company }} direktorius <br>
+            {{ approved_at_year }} m. {{ approved_at_month }} men. {{ approved_at_day }} d
+        </div>
+        <div class='title-header'>
+            <p class='title'>{{company_title}}<br>{{ company }}</p>
+            <p class='title'>{{company_title}}MATERIALINIU VERTYBIU NURASYMO AKTAS</p>
+        </div>
+        <div class='main'>Komisija patvirtinta {{ approved_at }} (pvz. 2012 m. rugpjucio 1 d.) isakymu Nr.
+            {{ order_approval_number }} "Del komisijos sudarymo materialiniu vertybiu nurasymui"
+            {% if commisioner1_name != "" %}, komisijos pirmininkas {{ commisioner1_name }} - {{ commisioner1_obligation }} {% endif %}
+            {% if commisioner2_name != "" %}, {{ commisioner2_name }} - {{ commisioner2_obligation }}{% endif %}
+            {% if commisioner3_name != "" %}, {{ commisioner3_name }} - {{ commisioner3_obligation }}{% endif %}
+            {% if commisioner4_name != "" %}, {{ commisioner4_name }} - {{ commisioner4_obligation }}{% endif %}
+            , kad per {{ approved_at_year }} m.
+            {{ approved_at_month }} men. {{ user_location }} sunaudojo:
+            <table>
+                <tr>
+                    <th style="width: 10%"><br/>Eil. Nr.</th>
+                    <th style="width: 25%"><br/>Materialines
+                        vertybes<br/> pavadinimas</th>
+                    <th style="width: 10%"><br/>Mato vnt.</th>
+                    <th style="width: 10%"><br/>Kiekis</th>
+                    <th style="width: 10%"><br/>Kaina</th>
+                    <th style="width: 10%"><br/>Suma su PVM EUR</th>
+                    <th style="width: 25%"><br/>Panaudojimo tikslas ir vieta</th>
+                </tr>
+                {% for invoice in invoices %}
+                    <tr>
+                        <td style="margin: 5px"><br/> {{ forloop.counter }}. </td>
+                        <td style="margin: 5px"><br/> {{ invoice.name }}</td>
+                        <td style="margin: 5px"><br/> {{ invoice.measurement }}</td>
+                        <td style="margin: 5px"><br/> {{ invoice.amount }}</td>
+                        <td style="margin: 5px"><br/> {{ invoice.cost }}</td>
+                        <td style="margin: 5px"><br/> {{ invoice.sum }}</td>
+                        <td style="margin: 5px"><br/> {{ invoice.location }}</td>
+                    </tr>
+                {% endfor %}
+                <tr>
+                    <td> </td>
+                    <td style="margin: 5px"><br/>Is viso:</td>
+                    <td> </td>
+                    <td> </td>
+                    <td> </td>
+                    <td style="margin: 5px"><br/>{{ total_sum }} </td>
+                    <td> </td>
+                </tr>
+            </table>
+            <br/>
+        </div>
+        <p>
+            Pagal pirkimo dokumentus :
+            <br/>
+            {{ purchase_doc_seller }} PVM s.f. {{ purchase_doc_serial }} Nr. {{ purchase_doc_number }}, {{ purchase_doc_at }} ;
+            <br/>
+            (pvz. : UAB "Kede" PVM s.f SS Nr. 03230109, 2016 11 10 ; <strong>yra keletas pirkimo dokumentu</strong>)
+            <br/>
+        <table class="white-table" style="width: 100%;">
+            <tr>
+                <td style="width: 35%" class="white-table">Komisijos pirmininkas</td>
+                <td style="width: 35%" class="white-table">_______________________</td>
+                <td style="width: 30%" class="white-table">{{ commisioner1_name }} </td>
+            </tr>
+            <tr class="white-table">
+                <td style="width: 35%" class="white-table">Nariai</td>
+                <td style="width: 35%" class="white-table">_______________________</td>
+                <td style="width: 30%" class="white-table">{{ commisioner2_name }} </td>
+            </tr>
+            <tr class="white-table">
+                <td style="width: 35%" class="white-table"> </td>
+                <td style="width: 35%" class="white-table">_______________________</td>
+                <td style="width: 30%" class="white-table">{{ commisioner3_name }} </td>
+            </tr>
+            <tr class="white-table">
+                <td style="width: 35%" class="white-table"> </td>
+                <td style="width: 35%" class="white-table">_______________________</td>
+                <td style="width: 30%" class="white-table">{{ commisioner4_name }} </td>
+            </tr>
+        </table>
+        <br>
+        <table class="white-table" style="width: 100%;">
+            <tr class="white-table">
+                <td style="width: 20%; margin: 5px;" class="white-table">Mat. atsakingas</td>
+                <td style="width: 50%" class="white-table"> </td>
+                <td style="width: 30%; margin: 5px;" class="white-table">{{ user_name }} </td>
+            </tr>
+        </table>
+        </p>
+    </div>
+    </body>
+</html>

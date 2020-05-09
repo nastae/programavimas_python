@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>VAT Invoice</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+</head>
+<body style="margin: 25px">
+    <header>
+        <h1>VAT Invoice application</h1>
+            {% if user.is_authenticated %}
+            Hi {{ user.username }}! |
+                <a href="{% url 'logout' %}">Logout</a> |
+                <a href="{% url 'form-create' %}">Create Form</a> |
+                <a href="{% url 'form-list' %}">View Forms</a>
+            {% else %}
+                <a href="{% url 'register' %}">Register</a> |
+                <a href="{% url 'login' %}">Login</a>
+            {% endif %}
+    </header>
+    <hr>
+    <main>
+        {% block content %}
+        {% endblock %}
+    </main>
+    <hr>
+    <footer>
+    </footer>
+</body>
+</html>
